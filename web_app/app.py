@@ -35,8 +35,7 @@ class MainClass(Resource):
 				"status": "User description fit",
 				"result": score}
             )
-            #return response
-            return str(score)
+            return response
 
         except Exception as error:
             return jsonify(
