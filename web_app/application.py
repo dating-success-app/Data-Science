@@ -31,7 +31,6 @@ def predict():
     try:
         input_data = request.get_json(force=True)
         data = input_data['description']
-        #key = input_data['id']
 
         score = len(str(data))
 
@@ -43,7 +42,7 @@ def predict():
     except Exception as error:
         return jsonify(
             {"statusCode": 500,
-            "status": "Could not make prediction",
+            "status": "Check JSON format",
             "error": str(error)}
         )
 if __name__ == '__main__':
