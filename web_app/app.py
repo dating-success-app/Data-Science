@@ -16,33 +16,37 @@ app = Api(
     description='Determine how well a description fits a paradigm'         
 )
 
-model = app.model('Input Model', 
-                    {'text': fields.String(required = True, 
-					 description="User input text", 
-					 help="cannot be blank.")})
+# model = app.model('Input Model', 
+#                     {'text': fields.String(required = True, 
+# 					 description="User input text", 
+# 					 help="cannot be blank.")})
 
-@app.route("/")
-class MainClass(Resource):
-    def post(self):
-        try:
-            input_data = request.json
-            data = [val for val in input_data.values()]
+@app.route('/')
+def default():
+    return 'Homepage'
 
-            score = len(str(data))
+@app.route("/api", methods=['POST'])
+def predict():
 
-            response = jsonify(
-                {"statusCode": 200,
-				"status": "User description fit",
-				"result": score}
-            )
-            return response
+    try:
+        input_data = request.get_json(force=True)
+        data = input_data['text']
 
-        except Exception as error:
-            return jsonify(
-                {"statusCode": 500,
-				"status": "Could not make prediction",
-				"error": str(error)}
-            )
+        score = len(str(data))
+
+        response = jsonify(
+            {"statusCode": 200,
+            "status": "Success!",
+            "result": score}
+        )
+        return response
+
+    except Exception as error:
+        return jsonify(
+            {"statusCode": 500,
+            "status": "Could not make prediction",
+            "error": str(error)}
+        )
 
 
 
