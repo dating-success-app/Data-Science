@@ -6,7 +6,7 @@ from flask_restplus import Api, Resource, fields
 
 
 # Define the Application as a Flask App
-app = Flask(__name__)
+application = Flask(__name__)
 
 # Use Api to intialize the application. 
 # app = Api(
@@ -21,23 +21,22 @@ app = Flask(__name__)
 # 					 description="User input text", 
 # 					 help="cannot be blank.")})
 
-@app.route('/')
+@application.route('/')
 def default():
     return 'Homepage'
 
-@app.route("/api", methods=['POST'])
+@application.route("/api", methods=['POST'])
 def predict():
 
     try:
         input_data = request.get_json(force=True)
-        data = input_data['text']
+        data = input_data['description']
+        #key = input_data['id']
 
         score = len(str(data))
 
         response = jsonify(
-            {"statusCode": 200,
-            "status": "Success!",
-            "result": score}
+            {"score": score}
         )
         return response
 
@@ -48,5 +47,5 @@ def predict():
             "error": str(error)}
         )
 if __name__ == '__main__':
-   app.run()
+   application.run()
 
