@@ -6,15 +6,15 @@ from flask_restplus import Api, Resource, fields
 
 
 # Define the Application as a Flask App
-flask_app = Flask(__name__)
+app = Flask(__name__)
 
 # Use Api to intialize the application. 
-app = Api(
-    app=flask_app,
-    version='0.1',
-    title='Dating Description Quality',
-    description='Determine how well a description fits a paradigm'         
-)
+# app = Api(
+#     app=flask_app,
+#     version='0.1',
+#     title='Dating Description Quality',
+#     description='Determine how well a description fits a paradigm'         
+# )
 
 # model = app.model('Input Model', 
 #                     {'text': fields.String(required = True, 
@@ -47,6 +47,6 @@ def predict():
             "status": "Could not make prediction",
             "error": str(error)}
         )
-
-
+if __name__ == '__main__':
+   app.run()
 
