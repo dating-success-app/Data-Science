@@ -1,25 +1,12 @@
 """
-Main application and routing logic for Twitoff
+Main application and routing logic for Datify
 """
 from flask import Flask, request, jsonify
-from flask_restplus import Api, Resource, fields
-
+from paradigm import load_models
 
 # Define the Application as a Flask App
 application = Flask(__name__)
 
-# Use Api to intialize the application. 
-# app = Api(
-#     app=flask_app,
-#     version='0.1',
-#     title='Dating Description Quality',
-#     description='Determine how well a description fits a paradigm'         
-# )
-
-# model = app.model('Input Model', 
-#                     {'text': fields.String(required = True, 
-# 					 description="User input text", 
-# 					 help="cannot be blank.")})
 
 @application.route('/')
 def default():
@@ -31,9 +18,9 @@ def predict():
     try:
         input_data = request.get_json(force=True)
         data = input_data['description']
-
-        score = len(str(data))
-
+        #run models
+        score = load_models([data])
+        #returns a JSON
         response = jsonify(
             {"score": score}
         )
@@ -41,7 +28,7 @@ def predict():
 
     except Exception as error:
         return jsonify(
-            {"statusCode": 500,
+            {"statusCode": '?',
             "status": "Check JSON format",
             "error": str(error)}
         )
